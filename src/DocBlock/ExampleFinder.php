@@ -13,18 +13,21 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock;
 
-use phpDocumentor\Reflection\DocBlock\Tags\Example;
-
 use function array_slice;
+
+use const DIRECTORY_SEPARATOR;
+
 use function file;
 use function getcwd;
 use function implode;
 use function is_readable;
+
+use phpDocumentor\Reflection\DocBlock\Tags\Example;
+
 use function rtrim;
 use function sprintf;
-use function trim;
 
-use const DIRECTORY_SEPARATOR;
+use function trim;
 
 /**
  * Class used to find an example file's location based on a given ExampleDescriptor.

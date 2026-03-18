@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 // based on https://ocramius.github.io/blog/automated-code-coverage-check-for-github-pull-requests-with-travis/
 $inputFile  = __DIR__ . '/../build/logs/clover.xml';
 $percentage = min(100, max(0, (int) $argv[1]));

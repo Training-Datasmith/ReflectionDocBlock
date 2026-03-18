@@ -12,11 +12,11 @@ use phpDocumentor\Reflection\DocBlockFactory;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\PseudoTypes\ArrayShape;
 use phpDocumentor\Reflection\PseudoTypes\ArrayShapeItem;
+use phpDocumentor\Reflection\PseudoTypes\Generic;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\Callable_;
 use phpDocumentor\Reflection\Types\CallableParameter;
-use phpDocumentor\Reflection\PseudoTypes\Generic;
 use phpDocumentor\Reflection\Types\Integer;
 use phpDocumentor\Reflection\Types\Nullable;
 use phpDocumentor\Reflection\Types\Object_;
@@ -155,8 +155,7 @@ DOCBLOCK;
                 new ArrayShape(
                     new ArrayShapeItem('foo', new Integer(), false),
                     new ArrayShapeItem('bar', new Nullable(new String_()), true),
-
-                )
+                ),
             ],
             [
                 'Collection<int, string>',

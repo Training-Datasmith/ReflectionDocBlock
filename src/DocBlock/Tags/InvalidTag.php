@@ -4,23 +4,28 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
+use function array_map;
+
 use Closure;
 use Exception;
-use phpDocumentor\Reflection\DocBlock\Tag;
-use ReflectionClass;
-use ReflectionException;
-use ReflectionFunction;
-use Throwable;
 
-use function array_map;
 use function get_class;
 use function get_resource_type;
 use function is_array;
 use function is_object;
+
 use function is_resource;
-use function sprintf;
 
 use const PHP_VERSION_ID;
+
+use phpDocumentor\Reflection\DocBlock\Tag;
+use ReflectionClass;
+use ReflectionException;
+use ReflectionFunction;
+
+use function sprintf;
+
+use Throwable;
 
 /**
  * This class represents an exception during the tag creation

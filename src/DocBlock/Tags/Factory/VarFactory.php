@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
 
+use function is_string;
+
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Tags\Var_;
@@ -11,10 +13,10 @@ use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\VarTagValueNode;
-use Webmozart\Assert\Assert;
 
-use function is_string;
 use function trim;
+
+use Webmozart\Assert\Assert;
 
 /**
  * @internal This class is not part of the BC promise of this library.

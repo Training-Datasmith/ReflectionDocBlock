@@ -14,8 +14,6 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection;
 
 use Mockery as m;
-use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\DocBlock\Tag;
 use PHPUnit\Framework\TestCase;
 
 /**

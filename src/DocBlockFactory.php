@@ -13,26 +13,33 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection;
 
+use function array_shift;
+use function count;
+use function explode;
+
 use InvalidArgumentException;
+
+use function is_object;
+
 use LogicException;
+
+use function method_exists;
+
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
+
 use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\TagFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\Factory;
-use Webmozart\Assert\Assert;
 
-use function array_shift;
-use function count;
-use function explode;
-use function is_object;
-use function method_exists;
 use function preg_match;
 use function preg_replace;
 use function str_replace;
 use function strpos;
 use function substr;
 use function trim;
+
+use Webmozart\Assert\Assert;
 
 final class DocBlockFactory implements DocBlockFactoryInterface
 {

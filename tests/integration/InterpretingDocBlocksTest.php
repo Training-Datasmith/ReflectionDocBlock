@@ -218,7 +218,7 @@ DOC;
                 new Method(
                     'setInteger',
                     [
-                        new MethodParameter('integer', new Integer())
+                        new MethodParameter('integer', new Integer()),
                     ],
                     new Void_(),
                     false,
@@ -249,19 +249,18 @@ DOC;
         self::assertCount(1, $docblock->getTags());
         self::assertSame('Failed to parse docblock: Unexpected token ">", expected variable at offset 16 on line 1', $tags[0]->getException()->getMessage());
 
-
-//        self::assertEquals(
-//            [
-//                InvalidTag::create(
-//                    'array\Foo> $test',
-//                    'param',
-//                )->withError(
-//                    new ParserException(
-//                        'Could not find type in array\Foo> $test, please check for malformed notations', 'aa', 1)
-//                ),
-//            ],
-//            $docblock->getTags()
-//        );
+        //        self::assertEquals(
+        //            [
+        //                InvalidTag::create(
+        //                    'array\Foo> $test',
+        //                    'param',
+        //                )->withError(
+        //                    new ParserException(
+        //                        'Could not find type in array\Foo> $test, please check for malformed notations', 'aa', 1)
+        //                ),
+        //            ],
+        //            $docblock->getTags()
+        //        );
     }
 
     public function testConstantReferenceTypes(): void
@@ -417,7 +416,8 @@ identifier has already been registered.',
                         'deps',
                         new Array_(),
                         false,
-                        new Description("{
+                        new Description(
+                            "{
     Optional. List of dependencies.
 
     @type string|array ...$0 {
@@ -513,7 +513,8 @@ DOC;
                     'foo',
                     new Array_(),
                     false,
-                    new Description(<<<'DESCRIPTION'
+                    new Description(
+                        <<<'DESCRIPTION'
 {
     Description of foo.
 

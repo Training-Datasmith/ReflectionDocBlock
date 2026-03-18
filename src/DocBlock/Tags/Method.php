@@ -13,13 +13,15 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
+use function implode;
+
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\Exception\CannotCreateTag;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\Types\Void_;
+
 use Webmozart\Assert\Assert;
 
-use function implode;
 /**
  * Reflection class for an {@}method in a Docblock.
  */

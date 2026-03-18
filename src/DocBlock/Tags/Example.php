@@ -13,15 +13,17 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
-use phpDocumentor\Reflection\DocBlock\Tag;
-use Webmozart\Assert\Assert;
-
 use function array_key_exists;
+
+use phpDocumentor\Reflection\DocBlock\Tag;
+
 use function preg_match;
 use function rawurlencode;
 use function str_replace;
 use function strpos;
 use function trim;
+
+use Webmozart\Assert\Assert;
 
 /**
  * Reflection class for a {@}example tag in a Docblock.

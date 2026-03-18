@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
 use phpDocumentor\Reflection\DocBlock\Serializer;
@@ -24,4 +26,3 @@ $serializer = new Serializer(0, '', true, null, null, PHP_EOL);
 
 // Reconstitution is performed by the `getDocComment()` method.
 $reconstitutedDocComment = $serializer->getDocComment($docblock);
-

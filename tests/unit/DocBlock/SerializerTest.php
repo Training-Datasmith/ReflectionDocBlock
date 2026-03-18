@@ -14,12 +14,14 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection\DocBlock;
 
 use Mockery as m;
+
+use const PHP_EOL;
+
 use phpDocumentor\Reflection\DocBlock;
+
 use PHPUnit\Framework\TestCase;
 
 use function str_replace;
-
-use const PHP_EOL;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Serializer

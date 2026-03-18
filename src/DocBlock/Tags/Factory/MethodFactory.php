@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
 
+use function array_map;
+
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Tags\Method;
@@ -16,10 +18,10 @@ use phpDocumentor\Reflection\Types\Void_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MethodTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MethodTagValueParameterNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
-use Webmozart\Assert\Assert;
 
-use function array_map;
 use function trim;
+
+use Webmozart\Assert\Assert;
 
 /**
  * @internal This class is not part of the BC promise of this library.
@@ -43,7 +45,7 @@ final class MethodFactory implements PHPStanFactory
         return new Method(
             $tagValue->methodName,
             array_map(
-                fn(MethodTagValueParameterNode $param) => new MethodParameter(
+                fn (MethodTagValueParameterNode $param) => new MethodParameter(
                     trim($param->parameterName, '$'),
                     $param->type === null ? new Mixed_() : $this->typeResolver->createType(
                         $param->type,

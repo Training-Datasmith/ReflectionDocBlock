@@ -28,8 +28,6 @@ class DocblockSeeTagResolvingTest extends TestCase
  */
 DOCBLOCK;
 
-
-
         $factory  = DocBlockFactory::createInstance();
         $docblock = $factory->create($docblockString, $context);
 

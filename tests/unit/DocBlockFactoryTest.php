@@ -14,6 +14,9 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection;
 
 use Mockery as m;
+
+use const PHP_EOL;
+
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
@@ -21,11 +24,10 @@ use phpDocumentor\Reflection\DocBlock\TagFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use phpDocumentor\Reflection\Types\Context;
 use PHPUnit\Framework\TestCase;
+
 use ReflectionClass;
 
 use function str_replace;
-
-use const PHP_EOL;
 
 /**
  * @uses               \Webmozart\Assert\Assert

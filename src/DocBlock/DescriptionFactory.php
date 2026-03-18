@@ -13,21 +13,24 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock;
 
+use function count;
+use function implode;
+use function ltrim;
+
+use function min;
+
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\Factory;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use phpDocumentor\Reflection\Utils;
 
-use function count;
-use function implode;
-use function ltrim;
-use function min;
+use const PREG_SPLIT_DELIM_CAPTURE;
+
 use function str_replace;
 use function strlen;
 use function strpos;
 use function substr;
-use function trim;
 
-use const PREG_SPLIT_DELIM_CAPTURE;
+use function trim;
 
 /**
  * Creates a new Description object given a body of text.

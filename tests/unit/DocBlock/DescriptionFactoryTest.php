@@ -14,14 +14,16 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection\DocBlock;
 
 use Mockery as m;
+
+use const PHP_EOL;
+
 use phpDocumentor\Reflection\DocBlock\Tags\InvalidTag;
 use phpDocumentor\Reflection\DocBlock\Tags\Link as LinkTag;
 use phpDocumentor\Reflection\Types\Context;
+
 use PHPUnit\Framework\TestCase;
 
 use function str_replace;
-
-use const PHP_EOL;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\DescriptionFactory

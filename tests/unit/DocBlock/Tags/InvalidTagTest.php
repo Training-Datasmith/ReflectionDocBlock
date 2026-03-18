@@ -5,13 +5,19 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use Exception;
-use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
-use Throwable;
 
 use function fopen;
+
+use InvalidArgumentException;
+
 use function is_string;
+
+use PHPUnit\Framework\TestCase;
+
 use function serialize;
+
+use Throwable;
+
 use function unserialize;
 
 /**

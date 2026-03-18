@@ -16,7 +16,7 @@ final class CustomParam implements Tag
     /** @var FqsenResolver|null */
     public $fqsenResolver;
 
-    public function getName() : string
+    public function getName(): string
     {
         return 'spy';
     }
@@ -30,12 +30,12 @@ final class CustomParam implements Tag
         return $tag;
     }
 
-    public function render(?Formatter $formatter = null) : string
+    public function render(?Formatter $formatter = null): string
     {
         return $this->getName();
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->getName();
     }

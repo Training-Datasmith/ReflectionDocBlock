@@ -44,7 +44,6 @@ class ReconstitutingADocBlockTest extends TestCase
         $this->assertSame($docComment, $reconstitutedDocComment);
     }
 
-
     /**
      * Method
      *

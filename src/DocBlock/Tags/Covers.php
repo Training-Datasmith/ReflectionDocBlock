@@ -13,16 +13,17 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
+use function array_key_exists;
+use function explode;
+
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
+
 use phpDocumentor\Reflection\Utils;
 use Webmozart\Assert\Assert;
-
-use function array_key_exists;
-use function explode;
 
 /**
  * Reflection class for a @covers tag in a Docblock.

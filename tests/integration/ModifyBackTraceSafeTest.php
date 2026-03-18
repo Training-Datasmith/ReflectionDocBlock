@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection;
 
-
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,8 +25,8 @@ class ModifyBackTraceSafeTest extends TestCase
     }
 }
 
-
-class Node {
+class Node
+{
     public $children = [];
 }
 
@@ -52,7 +51,7 @@ class Traverser
         return $doNodes;
     }
 
-    public function callback(Node $class) : Node
+    public function callback(Node $class): Node
     {
         $docblock = <<<DOCBLOCK
  /**
@@ -67,7 +66,7 @@ DOCBLOCK;
         return $class;
     }
 
-    private function traverseNode(Node $node) : Node
+    private function traverseNode(Node $node): Node
     {
         if ($node->children) {
             $this->traverseArray($node->children);

@@ -13,7 +13,16 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock;
 
+use function array_key_exists;
+use function array_merge;
+use function array_slice;
+use function call_user_func_array;
+use function get_class;
+
 use InvalidArgumentException;
+
+use function is_object;
+
 use phpDocumentor\Reflection\DocBlock\Tags\Author;
 use phpDocumentor\Reflection\DocBlock\Tags\Covers;
 use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
@@ -41,23 +50,21 @@ use phpDocumentor\Reflection\DocBlock\Tags\Source;
 use phpDocumentor\Reflection\DocBlock\Tags\Uses;
 use phpDocumentor\Reflection\DocBlock\Tags\Version;
 use phpDocumentor\Reflection\FqsenResolver;
+
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
+
+use function preg_match;
+
 use ReflectionMethod;
 use ReflectionNamedType;
 use ReflectionParameter;
-use Webmozart\Assert\Assert;
 
-use function array_key_exists;
-use function array_merge;
-use function array_slice;
-use function call_user_func_array;
-use function get_class;
-use function is_object;
-use function preg_match;
 use function sprintf;
 use function strpos;
 use function trim;
+
+use Webmozart\Assert\Assert;
 
 /**
  * Creates a Tag object given the contents of a tag.

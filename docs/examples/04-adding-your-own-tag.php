@@ -1,16 +1,18 @@
 <?php
+
+declare(strict_types=1);
 /**
  * In this example we demonstrate how you can add your own Tag using a Static Factory method in your Tag class.
  */
 
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
-use phpDocumentor\Reflection\DocBlock\Serializer;
-use phpDocumentor\Reflection\DocBlock\Tag;
-use phpDocumentor\Reflection\DocBlockFactory;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
+use phpDocumentor\Reflection\DocBlock\Serializer;
+use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Tags\BaseTag;
+use phpDocumentor\Reflection\DocBlockFactory;
 use phpDocumentor\Reflection\Types\Context;
 use Webmozart\Assert\Assert;
 
@@ -127,5 +129,5 @@ $customTagObjects = $docblock->getTagsByName('my-tag');
 
 // As an experiment: let's reconstitute the DocBlock and observe that because we added a __toString() method
 // to the tag class that we can now also see it.
-$serializer              = new Serializer(0, '',true, null, null, PHP_EOL);
+$serializer              = new Serializer(0, '', true, null, null, PHP_EOL);
 $reconstitutedDocComment = $serializer->getDocComment($docblock);

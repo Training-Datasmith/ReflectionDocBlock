@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
+use function array_key_exists;
+use function explode;
+
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen as FqsenRef;
@@ -21,12 +24,12 @@ use phpDocumentor\Reflection\DocBlock\Tags\Reference\Url;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
-use phpDocumentor\Reflection\Utils;
-use Webmozart\Assert\Assert;
 
-use function array_key_exists;
-use function explode;
+use phpDocumentor\Reflection\Utils;
+
 use function preg_match;
+
+use Webmozart\Assert\Assert;
 
 /**
  * Reflection class for an {@}see tag in a Docblock.

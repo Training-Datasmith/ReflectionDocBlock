@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection;
 
+use const E_WARNING;
+
 use phpDocumentor\Reflection\Exception\PcreException;
+
 use PHPUnit\Framework\TestCase;
 
 use function set_error_handler;
-
-use const E_WARNING;
 
 final class PregSplitTest extends TestCase
 {
