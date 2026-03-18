@@ -37,7 +37,7 @@ final class PropertyWrite extends TagWithType
     /**
      * Returns the variable's name.
      */
-    public function getVariableName(): ?string
+    public function getVariableName(): string
     {
         return $this->variableName;
     }

@@ -45,10 +45,7 @@ final class MethodParameterFactory
         return var_export($defaultValue, true);
     }
 
-    /**
-     * @param mixed $defaultValue
-     */
-    private function formatNull($defaultValue): string
+    private function formatNull(): string
     {
         return 'null';
     }

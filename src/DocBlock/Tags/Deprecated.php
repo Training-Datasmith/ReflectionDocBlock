@@ -54,9 +54,6 @@ final class Deprecated extends BaseTag
         $this->description = $description;
     }
 
-    /**
-     * @return static
-     */
     public static function create(
         ?string $body,
         ?DescriptionFactory $descriptionFactory = null,

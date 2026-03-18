@@ -274,7 +274,7 @@ final class StandardTagFactory implements TagFactory
         $handlerClassName = Generic::class;
         if (isset($this->tagHandlerMappings[$tagName])) {
             $handlerClassName = $this->tagHandlerMappings[$tagName];
-        } elseif ($this->isAnnotation($tagName)) {
+        } elseif ($this->isAnnotation()) {
             // TODO: Annotation support is planned for a later stage and as such is disabled for now
             $tagName = (string) $this->fqsenResolver->resolve($tagName, $context);
             if (isset($this->annotationMappings[$tagName])) {
@@ -380,13 +380,12 @@ final class StandardTagFactory implements TagFactory
      *
      * @todo this method should be populated once we implement Annotation notation support.
      */
-    private function isAnnotation(string $tagContent): bool
+    private function isAnnotation(): bool
     {
         // 1. Contains a namespace separator
         // 2. Contains parenthesis
         // 3. Is present in a list of known annotations (make the algorithm smart by first checking is the last part
         //    of the annotation class name matches the found tag name
-
         return false;
     }
 }

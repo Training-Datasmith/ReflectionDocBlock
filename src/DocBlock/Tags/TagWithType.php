@@ -19,7 +19,6 @@ use phpDocumentor\Reflection\Type;
 
 abstract class TagWithType extends BaseTag
 {
-    /** @var ?Type */
     protected ?Type $type = null;
 
     /**

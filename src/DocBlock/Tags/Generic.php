@@ -43,8 +43,6 @@ final class Generic extends BaseTag
 
     /**
      * Creates a new tag that represents any unknown tag type.
-     *
-     * @return static
      */
     public static function create(
         string $body,
@@ -66,12 +64,10 @@ final class Generic extends BaseTag
     public function __toString(): string
     {
         if ($this->description) {
-            $description = $this->description->render();
-        } else {
-            $description = '';
+            return $this->description->render();
         }
 
-        return $description;
+        return '';
     }
 
     /**

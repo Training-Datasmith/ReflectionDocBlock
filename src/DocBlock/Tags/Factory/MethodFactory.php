@@ -43,20 +43,18 @@ final class MethodFactory implements PHPStanFactory
         return new Method(
             $tagValue->methodName,
             array_map(
-                function (MethodTagValueParameterNode $param) use ($context) {
-                    return new MethodParameter(
-                        trim($param->parameterName, '$'),
-                        $param->type === null ? new Mixed_() : $this->typeResolver->createType(
-                            $param->type,
-                            $context
-                        ),
-                        $param->isReference,
-                        $param->isVariadic,
-                        $param->defaultValue === null ?
-                            MethodParameter::NO_DEFAULT_VALUE :
-                            (string) $param->defaultValue
-                    );
-                },
+                fn(MethodTagValueParameterNode $param) => new MethodParameter(
+                    trim($param->parameterName, '$'),
+                    $param->type === null ? new Mixed_() : $this->typeResolver->createType(
+                        $param->type,
+                        $context
+                    ),
+                    $param->isReference,
+                    $param->isVariadic,
+                    $param->defaultValue === null ?
+                        MethodParameter::NO_DEFAULT_VALUE :
+                        (string) $param->defaultValue
+                ),
                 $tagValue->parameters
             ),
             $this->createReturnType($tagValue, $context),
