@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
@@ -10,24 +9,19 @@ declare(strict_types=1);
  *
  * @link      http://phpdoc.org
  */
+namespace Php_Documentor\Reflection\Doc_Block\Tags;
 
-namespace phpDocumentor\Reflection\DocBlock\Tags;
-
-use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
-use phpDocumentor\Reflection\Types\Context as TypeContext;
-
+use Php_Documentor\Reflection\Doc_Block\Description;
+use Php_Documentor\Reflection\Doc_Block\Description_Factory;
+use Php_Documentor\Reflection\Types\Context as TypeContext;
 use function preg_match;
-
 use Webmozart\Assert\Assert;
-
 /**
  * Reflection class for a {@}deprecated tag in a Docblock.
  */
-final class Deprecated extends BaseTag
+final class Deprecated extends Base_Tag
 {
     protected string $name = 'deprecated';
-
     /**
      * PCRE regular expression matching a version vector.
      * Assumes the "x" modifier.
@@ -43,51 +37,33 @@ final class Deprecated extends BaseTag
         # around the actual version vector.
         [^\s\:]+\:\s*\$[^\$]+\$
     )';
-
     /** @var string|null The version vector. */
     private ?string $version = null;
-
     public function __construct(?string $version = null, ?Description $description = null)
     {
-        Assert::nullOrNotEmpty($version);
-
-        $this->version     = $version;
+        Assert::null_or_not_empty($version);
+        $this->version = $version;
         $this->description = $description;
     }
-
-    public static function create(
-        ?string $body,
-        ?DescriptionFactory $descriptionFactory = null,
-        ?TypeContext $context = null
-    ): self {
+    public static function create(?string $body, ?Description_Factory $description_factory = null, ?Type_Context $context = null): self
+    {
         if ($body === null || $body === '') {
             return new static();
         }
-
         $matches = [];
         if (!preg_match('/^(' . self::REGEX_VECTOR . ')\s*(.+)?$/sux', $body, $matches)) {
-            return new static(
-                null,
-                $descriptionFactory !== null ? $descriptionFactory->create($body, $context) : null
-            );
+            return new static(null, $description_factory !== null ? $description_factory->create($body, $context) : null);
         }
-
-        Assert::notNull($descriptionFactory);
-
-        return new static(
-            $matches[1],
-            $descriptionFactory->create($matches[2] ?? '', $context)
-        );
+        Assert::not_null($description_factory);
+        return new static($matches[1], $description_factory->create($matches[2] ?? '', $context));
     }
-
     /**
      * Gets the version section of the tag.
      */
-    public function getVersion(): ?string
+    public function get_version(): ?string
     {
         return $this->version;
     }
-
     /**
      * Returns a string representation for this tag.
      */
@@ -98,9 +74,7 @@ final class Deprecated extends BaseTag
         } else {
             $description = '';
         }
-
         $version = (string) $this->version;
-
         return $version . ($description !== '' ? ($version !== '' ? ' ' : '') . $description : '');
     }
 }

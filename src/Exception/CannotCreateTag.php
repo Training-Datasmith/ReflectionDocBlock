@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
-namespace phpDocumentor\Reflection\Exception;
+declare (strict_types=1);
+namespace Php_Documentor\Reflection\Exception;
 
 use LogicException;
-
-final class CannotCreateTag extends LogicException
+final class Cannot_Create_Tag extends LogicException
 {
 }

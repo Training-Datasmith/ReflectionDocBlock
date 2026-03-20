@@ -1,54 +1,42 @@
 <?php
 
-declare(strict_types=1);
-
-namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
+declare (strict_types=1);
+namespace Php_Documentor\Reflection\Doc_Block\Tags\Factory;
 
 use function is_string;
-
-use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
-use phpDocumentor\Reflection\DocBlock\Tag;
-use phpDocumentor\Reflection\DocBlock\Tags\TemplateCovariant;
-use phpDocumentor\Reflection\TypeResolver;
-use phpDocumentor\Reflection\Types\Context;
-use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
-use PHPStan\PhpDocParser\Ast\PhpDoc\TemplateTagValueNode;
-use PHPStan\PhpDocParser\Ast\Type\IdentifierTypeNode;
-
+use Php_Documentor\Reflection\Doc_Block\Description_Factory;
+use Php_Documentor\Reflection\Doc_Block\Tag;
+use Php_Documentor\Reflection\Doc_Block\Tags\Template_Covariant;
+use Php_Documentor\Reflection\Type_Resolver;
+use Php_Documentor\Reflection\Types\Context;
+use Php_Stan\Php_Doc_Parser\Ast\Php_Doc\Php_Doc_Tag_Node;
+use Php_Stan\Php_Doc_Parser\Ast\Php_Doc\Template_Tag_Value_Node;
+use Php_Stan\Php_Doc_Parser\Ast\Type\Identifier_Type_Node;
 use Webmozart\Assert\Assert;
-
 /**
  * @internal This class is not part of the BC promise of this library.
  */
-final class TemplateCovariantFactory implements PHPStanFactory
+final class Template_Covariant_Factory implements Php_Stan_Factory
 {
-    private DescriptionFactory $descriptionFactory;
-    private TypeResolver $typeResolver;
-
-    public function __construct(TypeResolver $typeResolver, DescriptionFactory $descriptionFactory)
+    private Description_Factory $description_factory;
+    private Type_Resolver $type_resolver;
+    public function __construct(Type_Resolver $type_resolver, Description_Factory $description_factory)
     {
-        $this->descriptionFactory = $descriptionFactory;
-        $this->typeResolver = $typeResolver;
+        $this->description_factory = $description_factory;
+        $this->type_resolver = $type_resolver;
     }
-
-    public function supports(PhpDocTagNode $node, Context $context): bool
+    public function supports(Php_Doc_Tag_Node $node, Context $context): bool
     {
-        return $node->value instanceof TemplateTagValueNode && $node->name === '@template-covariant';
+        return $node->value instanceof Template_Tag_Value_Node && $node->name === '@template-covariant';
     }
-
-    public function create(PhpDocTagNode $node, Context $context): Tag
+    public function create(Php_Doc_Tag_Node $node, Context $context): Tag
     {
-        $tagValue = $node->value;
-        Assert::isInstanceOf($tagValue, TemplateTagValueNode::class);
-
-        $description = $tagValue->getAttribute('description');
+        $tag_value = $node->value;
+        Assert::is_instance_of($tag_value, Template_Tag_Value_Node::class);
+        $description = $tag_value->get_attribute('description');
         if (is_string($description) === false) {
-            $description = $tagValue->description;
+            $description = $tag_value->description;
         }
-
-        return new TemplateCovariant(
-            $this->typeResolver->createType(new IdentifierTypeNode($tagValue->name), $context),
-            $this->descriptionFactory->create($description, $context)
-        );
+        return new Template_Covariant($this->type_resolver->create_type(new Identifier_Type_Node($tag_value->name), $context), $this->description_factory->create($description, $context));
     }
 }

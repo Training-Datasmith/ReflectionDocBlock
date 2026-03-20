@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
@@ -10,95 +9,77 @@ declare(strict_types=1);
  *
  * @link http://phpdoc.org
  */
-
-namespace phpDocumentor\Reflection\DocBlock\Tags;
+namespace Php_Documentor\Reflection\Doc_Block\Tags;
 
 use const FILTER_VALIDATE_EMAIL;
-
 use function filter_var;
-
 use InvalidArgumentException;
-
 use function preg_match;
-
 use function trim;
-
 /**
  * Reflection class for an {@}author tag in a Docblock.
  */
-final class Author extends BaseTag
+final class Author extends Base_Tag
 {
     /** @var string register that this is the author tag. */
     protected string $name = 'author';
-
     /** @var string The name of the author */
-    private string $authorName;
-
+    private string $author_name;
     /** @var string The email of the author */
-    private string $authorEmail;
-
+    private string $author_email;
     /**
      * Initializes this tag with the author name and e-mail.
      */
-    public function __construct(string $authorName, string $authorEmail)
+    public function __construct(string $author_name, string $author_email)
     {
-        if ($authorEmail && !filter_var($authorEmail, FILTER_VALIDATE_EMAIL)) {
+        if ($author_email && !filter_var($author_email, FILTER_VALIDATE_EMAIL)) {
             throw new InvalidArgumentException('The author tag does not have a valid e-mail address');
         }
-
-        $this->authorName  = $authorName;
-        $this->authorEmail = $authorEmail;
+        $this->author_name = $author_name;
+        $this->author_email = $author_email;
     }
-
     /**
      * Gets the author's name.
      *
      * @return string The author's name.
      */
-    public function getAuthorName(): string
+    public function get_author_name(): string
     {
-        return $this->authorName;
+        return $this->author_name;
     }
-
     /**
      * Returns the author's email.
      *
      * @return string The author's email.
      */
-    public function getEmail(): string
+    public function get_email(): string
     {
-        return $this->authorEmail;
+        return $this->author_email;
     }
-
     /**
      * Returns this tag in string form.
      */
     public function __toString(): string
     {
-        if ($this->authorEmail) {
-            $authorEmail = '<' . $this->authorEmail . '>';
+        if ($this->author_email) {
+            $author_email = '<' . $this->author_email . '>';
         } else {
-            $authorEmail = '';
+            $author_email = '';
         }
-
-        $authorName = $this->authorName;
-
-        return $authorName . ($authorEmail !== '' ? ($authorName !== '' ? ' ' : '') . $authorEmail : '');
+        $author_name = $this->author_name;
+        return $author_name . ($author_email !== '' ? ($author_name !== '' ? ' ' : '') . $author_email : '');
     }
-
     /**
      * Attempts to create a new Author object based on the tag body.
      */
     public static function create(string $body): ?self
     {
-        $splitTagContent = preg_match('/^([^\<]*)(?:\<([^\>]*)\>)?$/u', $body, $matches);
-        if (!$splitTagContent) {
+        $split_tag_content = preg_match('/^([^\<]*)(?:\<([^\>]*)\>)?$/u', $body, $matches);
+        if (!$split_tag_content) {
             return null;
         }
-
-        $authorName = trim($matches[1]);
-        $email      = isset($matches[2]) ? trim($matches[2]) : '';
-
-        return new static($authorName, $email);
+        $author_name = trim($matches[1]);
+        $email = isset($matches[2]) ? trim($matches[2]) : '';
+        return new static($author_name, $email);
     }
 }

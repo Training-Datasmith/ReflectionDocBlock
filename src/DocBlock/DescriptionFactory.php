@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
@@ -10,28 +9,21 @@ declare(strict_types=1);
  *
  * @link      http://phpdoc.org
  */
-
-namespace phpDocumentor\Reflection\DocBlock;
+namespace Php_Documentor\Reflection\Doc_Block;
 
 use function count;
 use function implode;
 use function ltrim;
-
 use function min;
-
-use phpDocumentor\Reflection\DocBlock\Tags\Factory\Factory;
-use phpDocumentor\Reflection\Types\Context as TypeContext;
-use phpDocumentor\Reflection\Utils;
-
+use Php_Documentor\Reflection\Doc_Block\Tags\Factory\Factory;
+use Php_Documentor\Reflection\Types\Context as TypeContext;
+use Php_Documentor\Reflection\Utils;
 use const PREG_SPLIT_DELIM_CAPTURE;
-
 use function str_replace;
 use function strlen;
 use function strpos;
 use function substr;
-
 use function trim;
-
 /**
  * Creates a new Description object given a body of text.
  *
@@ -49,33 +41,29 @@ use function trim;
  * of each line while maintaining any indentation that is used. This will prevent formatting parsers from tripping
  * over unexpected spaces as can be observed with tag descriptions.
  */
-class DescriptionFactory
+class Description_Factory
 {
-    private Factory $tagFactory;
-
+    private Factory $tag_factory;
     /**
      * Initializes this factory with the means to construct (inline) tags.
      */
-    public function __construct(Factory $tagFactory)
+    public function __construct(Factory $tag_factory)
     {
-        $this->tagFactory = $tagFactory;
+        $this->tag_factory = $tag_factory;
     }
-
     /**
      * Returns the parsed text of this description.
      */
-    public function create(string $contents, ?TypeContext $context = null): Description
+    public function create(string $contents, ?Type_Context $context = null): Description
     {
-        $tokens   = $this->lex($contents);
-        $count    = count($tokens);
-        $tagCount = 0;
-        $tags     = [];
-
+        $tokens = $this->lex($contents);
+        $count = count($tokens);
+        $tag_count = 0;
+        $tags = [];
         for ($i = 1; $i < $count; $i += 2) {
-            $tags[]     = $this->tagFactory->create($tokens[$i], $context);
-            $tokens[$i] = '%' . ++$tagCount . '$s';
+            $tags[] = $this->tag_factory->create($tokens[$i], $context);
+            $tokens[$i] = '%' . ++$tag_count . '$s';
         }
-
         //In order to allow "literal" inline tags, the otherwise invalid
         //sequence "{@}" is changed to "@", and "{}" is changed to "}".
         //"%" is escaped to "%%" because of vsprintf.
@@ -83,10 +71,8 @@ class DescriptionFactory
         for ($i = 0; $i < $count; $i += 2) {
             $tokens[$i] = str_replace(['{@}', '{}', '%'], ['@', '}', '%%'], $tokens[$i]);
         }
-
         return new Description(implode('', $tokens), $tags);
     }
-
     /**
      * Strips the contents from superfluous whitespace and splits the description into a series of tokens.
      *
@@ -94,15 +80,12 @@ class DescriptionFactory
      */
     private function lex(string $contents): array
     {
-        $contents = $this->removeSuperfluousStartingWhitespace($contents);
-
+        $contents = $this->remove_superfluous_starting_whitespace($contents);
         // performance optimalization; if there is no inline tag, don't bother splitting it up.
         if (strpos($contents, '{@') === false) {
             return [$contents];
         }
-
-        return Utils::pregSplit(
-            '/\{
+        return Utils::preg_split('/\{
                 # "{@}" is not a valid inline tag. This ensures that we do not treat it as one, but treat it literally.
                 (?!@\})
                 # We want to capture the whole tag line, but without the inline tag delimiters.
@@ -125,13 +108,8 @@ class DescriptionFactory
                     )* # If there are more inline tags, match them as well. We use "*" since there may not be any
                        # nested inline tags.
                 )
-            \}/Sux',
-            $contents,
-            0,
-            PREG_SPLIT_DELIM_CAPTURE
-        );
+            \}/Sux', $contents, 0, PREG_SPLIT_DELIM_CAPTURE);
     }
-
     /**
      * Removes the superfluous from a multi-line description.
      *
@@ -146,36 +124,31 @@ class DescriptionFactory
      * If we do not normalize the indentation then we have superfluous whitespace on the second and subsequent
      * lines and this may cause rendering issues when, for example, using a Markdown converter.
      */
-    private function removeSuperfluousStartingWhitespace(string $contents): string
+    private function remove_superfluous_starting_whitespace(string $contents): string
     {
-        $lines = Utils::pregSplit("/\r\n?|\n/", $contents);
-
+        $lines = Utils::preg_split("/\r\n?|\n/", $contents);
         // if there is only one line then we don't have lines with superfluous whitespace and
         // can use the contents as-is
         if (count($lines) <= 1) {
             return $contents;
         }
-
         // determine how many whitespace characters need to be stripped
-        $startingSpaceCount = 9999999;
-        for ($i = 1, $iMax = count($lines); $i < $iMax; ++$i) {
+        $starting_space_count = 9999999;
+        for ($i = 1, $i_max = count($lines); $i < $i_max; ++$i) {
             // lines with a no length do not count as they are not indented at all
             if (trim($lines[$i]) === '') {
                 continue;
             }
-
             // determine the number of prefixing spaces by checking the difference in line length before and after
             // an ltrim
-            $startingSpaceCount = min($startingSpaceCount, strlen($lines[$i]) - strlen(ltrim($lines[$i])));
+            $starting_space_count = min($starting_space_count, strlen($lines[$i]) - strlen(ltrim($lines[$i])));
         }
-
         // strip the number of spaces from each line
-        if ($startingSpaceCount > 0) {
-            for ($i = 1, $iMax = count($lines); $i < $iMax; ++$i) {
-                $lines[$i] = substr($lines[$i], $startingSpaceCount);
+        if ($starting_space_count > 0) {
+            for ($i = 1, $i_max = count($lines); $i < $i_max; ++$i) {
+                $lines[$i] = substr($lines[$i], $starting_space_count);
             }
         }
-
         return implode("\n", $lines);
     }
 }

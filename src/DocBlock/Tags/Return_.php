@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
@@ -10,21 +9,19 @@ declare(strict_types=1);
  *
  * @link      http://phpdoc.org
  */
+namespace Php_Documentor\Reflection\Doc_Block\Tags;
 
-namespace phpDocumentor\Reflection\DocBlock\Tags;
-
-use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\Type;
-
+use Php_Documentor\Reflection\Doc_Block\Description;
+use Php_Documentor\Reflection\Type;
 /**
  * Reflection class for a {@}return tag in a Docblock.
  */
-final class Return_ extends TagWithType
+final class Return_ extends Tag_With_Type
 {
     public function __construct(Type $type, ?Description $description = null)
     {
-        $this->name        = 'return';
-        $this->type        = $type;
+        $this->name = 'return';
+        $this->type = $type;
         $this->description = $description;
     }
 }

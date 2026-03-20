@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
@@ -10,14 +9,11 @@ declare(strict_types=1);
  *
  * @link      http://phpdoc.org
  */
+namespace Php_Documentor\Reflection\Doc_Block;
 
-namespace phpDocumentor\Reflection\DocBlock;
-
-use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
-use phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter;
-
+use Php_Documentor\Reflection\Doc_Block\Tags\Formatter;
+use Php_Documentor\Reflection\Doc_Block\Tags\Formatter\Passthrough_Formatter;
 use function vsprintf;
-
 /**
  * Object representing to description for a DocBlock.
  *
@@ -52,40 +48,35 @@ use function vsprintf;
  */
 class Description
 {
-    private string $bodyTemplate;
-
+    private string $body_template;
     /** @var Tag[] */
     private array $tags;
-
     /**
      * Initializes a Description with its body (template) and a listing of the tags used in the body template.
      *
      * @param Tag[] $tags
      */
-    public function __construct(string $bodyTemplate, array $tags = [])
+    public function __construct(string $body_template, array $tags = [])
     {
-        $this->bodyTemplate = $bodyTemplate;
-        $this->tags         = $tags;
+        $this->body_template = $body_template;
+        $this->tags = $tags;
     }
-
     /**
      * Returns the body template.
      */
-    public function getBodyTemplate(): string
+    public function get_body_template(): string
     {
-        return $this->bodyTemplate;
+        return $this->body_template;
     }
-
     /**
      * Returns the tags for this DocBlock.
      *
      * @return Tag[]
      */
-    public function getTags(): array
+    public function get_tags(): array
     {
         return $this->tags;
     }
-
     /**
      * Renders this description as a string where the provided formatter will format the tags in the expected string
      * format.
@@ -93,21 +84,17 @@ class Description
     public function render(?Formatter $formatter = null): string
     {
         if ($this->tags === []) {
-            return vsprintf($this->bodyTemplate, []);
+            return vsprintf($this->body_template, []);
         }
-
         if ($formatter === null) {
-            $formatter = new PassthroughFormatter();
+            $formatter = new Passthrough_Formatter();
         }
-
         $tags = [];
         foreach ($this->tags as $tag) {
             $tags[] = '{' . $formatter->format($tag) . '}';
         }
-
-        return vsprintf($this->bodyTemplate, $tags);
+        return vsprintf($this->body_template, $tags);
     }
-
     /**
      * Returns a plain string representation of this description.
      */

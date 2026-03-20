@@ -9,9 +9,7 @@
  *  @link      http://phpdoc.org
  *
  */
-
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
@@ -20,13 +18,11 @@ declare(strict_types=1);
  *
  * @link http://phpdoc.org
  */
-
-namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
+namespace Php_Documentor\Reflection\Doc_Block\Tags\Factory;
 
 use InvalidArgumentException;
-use phpDocumentor\Reflection\DocBlock\Tag;
-use phpDocumentor\Reflection\Types\Context as TypeContext;
-
+use Php_Documentor\Reflection\Doc_Block\Tag;
+use Php_Documentor\Reflection\Types\Context as TypeContext;
 interface Factory
 {
     /**
@@ -38,5 +34,5 @@ interface Factory
      *
      * @throws InvalidArgumentException If an invalid tag line was presented.
      */
-    public function create(string $tagLine, ?TypeContext $context = null): Tag;
+    public function create(string $tag_line, ?Type_Context $context = null): Tag;
 }

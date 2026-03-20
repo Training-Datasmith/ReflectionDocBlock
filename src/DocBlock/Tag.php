@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
@@ -10,22 +9,17 @@ declare(strict_types=1);
  *
  * @link      http://phpdoc.org
  */
+namespace Php_Documentor\Reflection\Doc_Block;
 
-namespace phpDocumentor\Reflection\DocBlock;
-
-use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
-
+use Php_Documentor\Reflection\Doc_Block\Tags\Formatter;
 interface Tag
 {
-    public function getName(): string;
-
+    public function get_name(): string;
     /**
      * @return Tag|mixed Class that implements Tag
      * @phpstan-return ?Tag
      */
     public static function create(string $body);
-
     public function render(?Formatter $formatter = null): string;
-
     public function __toString(): string;
 }

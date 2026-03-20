@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
@@ -10,190 +9,136 @@ declare(strict_types=1);
  *
  * @link      http://phpdoc.org
  */
-
-namespace phpDocumentor\Reflection\DocBlock\Tags;
+namespace Php_Documentor\Reflection\Doc_Block\Tags;
 
 use function array_key_exists;
-
-use phpDocumentor\Reflection\DocBlock\Tag;
-
+use Php_Documentor\Reflection\Doc_Block\Tag;
 use function preg_match;
 use function rawurlencode;
 use function str_replace;
 use function strpos;
 use function trim;
-
 use Webmozart\Assert\Assert;
-
 /**
  * Reflection class for a {@}example tag in a Docblock.
  */
 final class Example implements Tag
 {
     /** @var string Path to a file to use as an example. May also be an absolute URI. */
-    private string $filePath;
-
+    private string $file_path;
     /**
      * @var bool Whether the file path component represents an URI. This determines how the file portion
      *     appears at {@link getContent()}.
      */
-    private bool $isURI;
-
-    private int $startingLine;
-
-    private int $lineCount;
-
+    private bool $is_uri;
+    private int $starting_line;
+    private int $line_count;
     private ?string $content = null;
-
-    public function __construct(
-        string $filePath,
-        bool $isURI,
-        int $startingLine,
-        int $lineCount,
-        ?string $content
-    ) {
-        Assert::stringNotEmpty($filePath);
-        Assert::greaterThanEq($startingLine, 1);
-        Assert::greaterThanEq($lineCount, 0);
-
-        $this->filePath     = $filePath;
-        $this->startingLine = $startingLine;
-        $this->lineCount    = $lineCount;
+    public function __construct(string $file_path, bool $is_uri, int $starting_line, int $line_count, ?string $content)
+    {
+        Assert::string_not_empty($file_path);
+        Assert::greater_than_eq($starting_line, 1);
+        Assert::greater_than_eq($line_count, 0);
+        $this->file_path = $file_path;
+        $this->starting_line = $starting_line;
+        $this->line_count = $line_count;
         if ($content !== null) {
             $this->content = trim($content);
         }
-
-        $this->isURI = $isURI;
+        $this->is_uri = $is_uri;
     }
-
-    public function getContent(): string
+    public function get_content(): string
     {
         if ($this->content === null || $this->content === '') {
-            $filePath = $this->filePath;
-            if ($this->isURI) {
-                $filePath = $this->isUriRelative($this->filePath)
-                    ? str_replace('%2F', '/', rawurlencode($this->filePath))
-                    : $this->filePath;
+            $file_path = $this->file_path;
+            if ($this->is_uri) {
+                $file_path = $this->is_uri_relative($this->file_path) ? str_replace('%2F', '/', rawurlencode($this->file_path)) : $this->file_path;
             }
-
-            return trim($filePath);
+            return trim($file_path);
         }
-
         return $this->content;
     }
-
-    public function getDescription(): ?string
+    public function get_description(): ?string
     {
         return $this->content;
     }
-
     public static function create(string $body): ?Tag
     {
         // File component: File path in quotes or File URI / Source information
         if (!preg_match('/^\s*(?:(\"[^\"]+\")|(\S+))(?:\s+(.*))?$/sux', $body, $matches)) {
             return null;
         }
-
-        $filePath = null;
-        $fileUri  = null;
+        $file_path = null;
+        $file_uri = null;
         if (array_key_exists(1, $matches) && $matches[1] !== '') {
-            $filePath = $matches[1];
+            $file_path = $matches[1];
         } else {
-            $fileUri = array_key_exists(2, $matches) ? $matches[2] : '';
+            $file_uri = array_key_exists(2, $matches) ? $matches[2] : '';
         }
-
-        $startingLine = 1;
-        $lineCount    = 0;
-        $description  = null;
-
+        $starting_line = 1;
+        $line_count = 0;
+        $description = null;
         if (array_key_exists(3, $matches)) {
             $description = $matches[3];
-
             // Starting line / Number of lines / Description
-            if (preg_match('/^([1-9]\d*)(?:\s+((?1))\s*)?(.*)$/sux', $matches[3], $contentMatches)) {
-                $startingLine = (int) $contentMatches[1];
-                if (isset($contentMatches[2])) {
-                    $lineCount = (int) $contentMatches[2];
+            if (preg_match('/^([1-9]\d*)(?:\s+((?1))\s*)?(.*)$/sux', $matches[3], $content_matches)) {
+                $starting_line = (int) $content_matches[1];
+                if (isset($content_matches[2])) {
+                    $line_count = (int) $content_matches[2];
                 }
-
-                if (array_key_exists(3, $contentMatches)) {
-                    $description = $contentMatches[3];
+                if (array_key_exists(3, $content_matches)) {
+                    $description = $content_matches[3];
                 }
             }
         }
-
-        return new static(
-            $filePath ?? ($fileUri ?? ''),
-            $fileUri !== null,
-            $startingLine,
-            $lineCount,
-            $description
-        );
+        return new static($file_path ?? $file_uri ?? '', $file_uri !== null, $starting_line, $line_count, $description);
     }
-
     /**
      * Returns the file path.
      *
      * @return string Path to a file to use as an example.
      *     May also be an absolute URI.
      */
-    public function getFilePath(): string
+    public function get_file_path(): string
     {
-        return trim($this->filePath, '"');
+        return trim($this->file_path, '"');
     }
-
     /**
      * Returns a string representation for this tag.
      */
     public function __toString(): string
     {
-        $filePath = $this->filePath;
-        $isDefaultLine = $this->startingLine === 1 && $this->lineCount === 0;
-        $startingLine = !$isDefaultLine ? (string) $this->startingLine : '';
-        $lineCount = !$isDefaultLine ? (string) $this->lineCount : '';
+        $file_path = $this->file_path;
+        $is_default_line = $this->starting_line === 1 && $this->line_count === 0;
+        $starting_line = !$is_default_line ? (string) $this->starting_line : '';
+        $line_count = !$is_default_line ? (string) $this->line_count : '';
         $content = (string) $this->content;
-
-        return $filePath
-            . ($startingLine !== ''
-                ? ($filePath !== '' ? ' ' : '') . $startingLine
-                : '')
-            . ($lineCount !== ''
-                ? ($filePath !== '' || $startingLine !== '' ? ' ' : '') . $lineCount
-                : '')
-            . ($content !== ''
-                ? ($filePath !== '' || $startingLine !== '' || $lineCount !== '' ? ' ' : '') . $content
-                : '');
+        return $file_path . ($starting_line !== '' ? ($file_path !== '' ? ' ' : '') . $starting_line : '') . ($line_count !== '' ? ($file_path !== '' || $starting_line !== '' ? ' ' : '') . $line_count : '') . ($content !== '' ? ($file_path !== '' || $starting_line !== '' || $line_count !== '' ? ' ' : '') . $content : '');
     }
-
     /**
      * Returns true if the provided URI is relative or contains a complete scheme (and thus is absolute).
      */
-    private function isUriRelative(string $uri): bool
+    private function is_uri_relative(string $uri): bool
     {
         return strpos($uri, ':') === false;
     }
-
-    public function getStartingLine(): int
+    public function get_starting_line(): int
     {
-        return $this->startingLine;
+        return $this->starting_line;
     }
-
-    public function getLineCount(): int
+    public function get_line_count(): int
     {
-        return $this->lineCount;
+        return $this->line_count;
     }
-
-    public function getName(): string
+    public function get_name(): string
     {
         return 'example';
     }
-
     public function render(?Formatter $formatter = null): string
     {
         if ($formatter === null) {
-            $formatter = new Formatter\PassthroughFormatter();
+            $formatter = new Formatter\Passthrough_Formatter();
         }
-
         return $formatter->format($this);
     }
 }

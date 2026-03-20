@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
@@ -10,8 +9,7 @@ declare(strict_types=1);
  *
  * @link http://phpdoc.org
  */
-
-namespace phpDocumentor\Reflection\DocBlock\Tags\Reference;
+namespace Php_Documentor\Reflection\Doc_Block\Tags\Reference;
 
 /**
  * Interface for references in {@see \phpDocumentor\Reflection\DocBlock\Tags\See}

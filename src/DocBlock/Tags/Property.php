@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
@@ -10,38 +9,32 @@ declare(strict_types=1);
  *
  * @link      http://phpdoc.org
  */
+namespace Php_Documentor\Reflection\Doc_Block\Tags;
 
-namespace phpDocumentor\Reflection\DocBlock\Tags;
-
-use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\Type;
+use Php_Documentor\Reflection\Doc_Block\Description;
+use Php_Documentor\Reflection\Type;
 use Webmozart\Assert\Assert;
-
 /**
  * Reflection class for a {@}property tag in a Docblock.
  */
-final class Property extends TagWithType
+final class Property extends Tag_With_Type
 {
-    protected ?string $variableName = null;
-
-    public function __construct(?string $variableName, ?Type $type = null, ?Description $description = null)
+    protected ?string $variable_name = null;
+    public function __construct(?string $variable_name, ?Type $type = null, ?Description $description = null)
     {
-        Assert::string($variableName);
-
-        $this->name         = 'property';
-        $this->variableName = $variableName;
-        $this->type         = $type;
-        $this->description  = $description;
+        Assert::string($variable_name);
+        $this->name = 'property';
+        $this->variable_name = $variable_name;
+        $this->type = $type;
+        $this->description = $description;
     }
-
     /**
      * Returns the variable's name.
      */
-    public function getVariableName(): ?string
+    public function get_variable_name(): ?string
     {
-        return $this->variableName;
+        return $this->variable_name;
     }
-
     /**
      * Returns a string representation for this tag.
      */
@@ -52,17 +45,12 @@ final class Property extends TagWithType
         } else {
             $description = '';
         }
-
-        if ($this->variableName !== null && $this->variableName !== '') {
-            $variableName = '$' . $this->variableName;
+        if ($this->variable_name !== null && $this->variable_name !== '') {
+            $variable_name = '$' . $this->variable_name;
         } else {
-            $variableName = '';
+            $variable_name = '';
         }
-
         $type = (string) $this->type;
-
-        return $type
-            . ($variableName !== '' ? ($type !== '' ? ' ' : '') . $variableName : '')
-            . ($description !== '' ? ($type !== '' || $variableName !== '' ? ' ' : '') . $description : '');
+        return $type . ($variable_name !== '' ? ($type !== '' ? ' ' : '') . $variable_name : '') . ($description !== '' ? ($type !== '' || $variable_name !== '' ? ' ' : '') . $description : '');
     }
 }

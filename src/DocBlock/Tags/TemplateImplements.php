@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
@@ -10,16 +9,14 @@ declare(strict_types=1);
  *
  * @link http://phpdoc.org
  */
+namespace Php_Documentor\Reflection\Doc_Block\Tags;
 
-namespace phpDocumentor\Reflection\DocBlock\Tags;
-
-use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\Type;
-
+use Php_Documentor\Reflection\Doc_Block\Description;
+use Php_Documentor\Reflection\Type;
 /**
  * Reflection class for a {@}template-implements tag in a Docblock.
  */
-final class TemplateImplements extends Implements_
+final class Template_Implements extends Implements_
 {
     public function __construct(Type $type, ?Description $description = null)
     {

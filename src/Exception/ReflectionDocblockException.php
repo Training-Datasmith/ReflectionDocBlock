@@ -1,11 +1,9 @@
 <?php
 
-declare(strict_types=1);
-
-namespace phpDocumentor\Reflection\Exception;
+declare (strict_types=1);
+namespace Php_Documentor\Reflection\Exception;
 
 use Throwable;
-
-interface ReflectionDocblockException extends Throwable
+interface Reflection_Docblock_Exception extends Throwable
 {
 }

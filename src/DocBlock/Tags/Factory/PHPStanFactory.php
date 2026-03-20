@@ -1,16 +1,13 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types=1);
+namespace Php_Documentor\Reflection\Doc_Block\Tags\Factory;
 
-namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
-
-use phpDocumentor\Reflection\DocBlock\Tag;
-use phpDocumentor\Reflection\Types\Context;
-use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
-
-interface PHPStanFactory
+use Php_Documentor\Reflection\Doc_Block\Tag;
+use Php_Documentor\Reflection\Types\Context;
+use Php_Stan\Php_Doc_Parser\Ast\Php_Doc\Php_Doc_Tag_Node;
+interface Php_Stan_Factory
 {
-    public function create(PhpDocTagNode $node, Context $context): Tag;
-
-    public function supports(PhpDocTagNode $node, Context $context): bool;
+    public function create(Php_Doc_Tag_Node $node, Context $context): Tag;
+    public function supports(Php_Doc_Tag_Node $node, Context $context): bool;
 }

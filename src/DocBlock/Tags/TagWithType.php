@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
@@ -10,30 +9,25 @@ declare(strict_types=1);
  *
  * @link      http://phpdoc.org
  */
+namespace Php_Documentor\Reflection\Doc_Block\Tags;
 
-namespace phpDocumentor\Reflection\DocBlock\Tags;
-
-use phpDocumentor\Reflection\DocBlock\Tag;
-use phpDocumentor\Reflection\Exception\CannotCreateTag;
-use phpDocumentor\Reflection\Type;
-
-abstract class TagWithType extends BaseTag
+use Php_Documentor\Reflection\Doc_Block\Tag;
+use Php_Documentor\Reflection\Exception\Cannot_Create_Tag;
+use Php_Documentor\Reflection\Type;
+abstract class Tag_With_Type extends Base_Tag
 {
     protected ?Type $type = null;
-
     /**
      * Returns the type section of the variable.
      */
-    public function getType(): ?Type
+    public function get_type(): ?Type
     {
         return $this->type;
     }
-
     final public static function create(string $body): Tag
     {
-        throw new CannotCreateTag('Typed tag cannot be created');
+        throw new Cannot_Create_Tag('Typed tag cannot be created');
     }
-
     public function __toString(): string
     {
         if ($this->description) {
@@ -41,9 +35,7 @@ abstract class TagWithType extends BaseTag
         } else {
             $description = '';
         }
-
         $type = (string) $this->type;
-
         return $type . ($description !== '' ? ($type !== '' ? ' ' : '') . $description : '');
     }
 }

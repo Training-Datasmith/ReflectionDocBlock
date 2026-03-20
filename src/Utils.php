@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
@@ -10,17 +9,12 @@ declare(strict_types=1);
  *
  * @link      http://phpdoc.org
  */
+namespace Php_Documentor\Reflection;
 
-namespace phpDocumentor\Reflection;
-
-use phpDocumentor\Reflection\Exception\PcreException;
-
+use Php_Documentor\Reflection\Exception\Pcre_Exception;
 use function preg_last_error;
-
 use function preg_split as php_preg_split;
-
 use Webmozart\Assert\Assert;
-
 abstract class Utils
 {
     /**
@@ -50,15 +44,13 @@ abstract class Utils
      *
      * @throws PcreException
      */
-    public static function pregSplit(string $pattern, string $subject, int $limit = -1, int $flags = 0): array
+    public static function preg_split(string $pattern, string $subject, int $limit = -1, int $flags = 0): array
     {
         $parts = php_preg_split($pattern, $subject, $limit, $flags);
         if ($parts === false) {
-            throw PcreException::createFromPhpError(preg_last_error());
+            throw Pcre_Exception::create_from_php_error(preg_last_error());
         }
-
-        Assert::allString($parts);
-
+        Assert::all_string($parts);
         return $parts;
     }
 }

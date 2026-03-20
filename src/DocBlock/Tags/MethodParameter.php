@@ -8,85 +8,56 @@
  *
  *  @link      http://phpdoc.org
  */
+declare (strict_types=1);
+namespace Php_Documentor\Reflection\Doc_Block\Tags;
 
-declare(strict_types=1);
-
-namespace phpDocumentor\Reflection\DocBlock\Tags;
-
-use phpDocumentor\Reflection\DocBlock\Tags\Factory\MethodParameterFactory;
-use phpDocumentor\Reflection\Type;
-
-final class MethodParameter
+use Php_Documentor\Reflection\Doc_Block\Tags\Factory\Method_Parameter_Factory;
+use Php_Documentor\Reflection\Type;
+final class Method_Parameter
 {
     private Type $type;
-
-    private bool $isReference;
-
-    private bool $isVariadic;
-
+    private bool $is_reference;
+    private bool $is_variadic;
     private string $name;
-
     /** @var mixed */
-    private $defaultValue;
-
+    private $default_value;
     public const NO_DEFAULT_VALUE = '__NO_VALUE__';
-
     /**
      * @param mixed $defaultValue
      */
-    public function __construct(
-        string $name,
-        Type $type,
-        bool $isReference = false,
-        bool $isVariadic = false,
-        $defaultValue = self::NO_DEFAULT_VALUE
-    ) {
+    public function __construct(string $name, Type $type, bool $is_reference = false, bool $is_variadic = false, $default_value = self::NO_DEFAULT_VALUE)
+    {
         $this->type = $type;
-        $this->isReference = $isReference;
-        $this->isVariadic = $isVariadic;
+        $this->is_reference = $is_reference;
+        $this->is_variadic = $is_variadic;
         $this->name = $name;
-        $this->defaultValue = $defaultValue;
+        $this->default_value = $default_value;
     }
-
-    public function getName(): string
+    public function get_name(): string
     {
         return $this->name;
     }
-
-    public function getType(): Type
+    public function get_type(): Type
     {
         return $this->type;
     }
-
-    public function isReference(): bool
+    public function is_reference(): bool
     {
-        return $this->isReference;
+        return $this->is_reference;
     }
-
-    public function isVariadic(): bool
+    public function is_variadic(): bool
     {
-        return $this->isVariadic;
+        return $this->is_variadic;
     }
-
-    public function getDefaultValue(): ?string
+    public function get_default_value(): ?string
     {
-        if ($this->defaultValue === self::NO_DEFAULT_VALUE) {
+        if ($this->default_value === self::NO_DEFAULT_VALUE) {
             return null;
         }
-
-        return (new MethodParameterFactory())->format($this->defaultValue);
+        return (new Method_Parameter_Factory())->format($this->default_value);
     }
-
     public function __toString(): string
     {
-        return $this->getType() . ' ' .
-            ($this->isReference() ? '&' : '') .
-            ($this->isVariadic() ? '...' : '') .
-            '$' . $this->getName() .
-            (
-                $this->defaultValue !== self::NO_DEFAULT_VALUE ?
-                    ' = ' . (new MethodParameterFactory())->format($this->defaultValue) :
-                ''
-            );
+        return $this->get_type() . ' ' . ($this->is_reference() ? '&' : '') . ($this->is_variadic() ? '...' : '') . '$' . $this->get_name() . ($this->default_value !== self::NO_DEFAULT_VALUE ? ' = ' . (new Method_Parameter_Factory())->format($this->default_value) : '');
     }
 }

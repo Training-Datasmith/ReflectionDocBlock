@@ -1,86 +1,54 @@
 <?php
 
-declare(strict_types=1);
-
-namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
+declare (strict_types=1);
+namespace Php_Documentor\Reflection\Doc_Block\Tags\Factory;
 
 use function is_string;
-
-use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
-use phpDocumentor\Reflection\DocBlock\Tag;
-use phpDocumentor\Reflection\DocBlock\Tags\InvalidTag;
-use phpDocumentor\Reflection\DocBlock\Tags\Param;
-use phpDocumentor\Reflection\Exception\ParserException;
-use phpDocumentor\Reflection\TypeResolver;
-use phpDocumentor\Reflection\Types\Context;
-use PHPStan\PhpDocParser\Ast\PhpDoc\InvalidTagValueNode;
-use PHPStan\PhpDocParser\Ast\PhpDoc\ParamTagValueNode;
-use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
-use PHPStan\PhpDocParser\Ast\PhpDoc\TypelessParamTagValueNode;
-use PHPStan\PhpDocParser\Ast\Type\IdentifierTypeNode;
-use PHPStan\PhpDocParser\Ast\Type\OffsetAccessTypeNode;
-
+use Php_Documentor\Reflection\Doc_Block\Description_Factory;
+use Php_Documentor\Reflection\Doc_Block\Tag;
+use Php_Documentor\Reflection\Doc_Block\Tags\Invalid_Tag;
+use Php_Documentor\Reflection\Doc_Block\Tags\Param;
+use Php_Documentor\Reflection\Exception\Parser_Exception;
+use Php_Documentor\Reflection\Type_Resolver;
+use Php_Documentor\Reflection\Types\Context;
+use Php_Stan\Php_Doc_Parser\Ast\Php_Doc\Invalid_Tag_Value_Node;
+use Php_Stan\Php_Doc_Parser\Ast\Php_Doc\Param_Tag_Value_Node;
+use Php_Stan\Php_Doc_Parser\Ast\Php_Doc\Php_Doc_Tag_Node;
+use Php_Stan\Php_Doc_Parser\Ast\Php_Doc\Typeless_Param_Tag_Value_Node;
+use Php_Stan\Php_Doc_Parser\Ast\Type\Identifier_Type_Node;
+use Php_Stan\Php_Doc_Parser\Ast\Type\Offset_Access_Type_Node;
 use function trim;
-
 use Webmozart\Assert\Assert;
-
 /**
  * @internal This class is not part of the BC promise of this library.
  */
-final class ParamFactory implements PHPStanFactory
+final class Param_Factory implements Php_Stan_Factory
 {
-    private DescriptionFactory $descriptionFactory;
-    private TypeResolver $typeResolver;
-
-    public function __construct(TypeResolver $typeResolver, DescriptionFactory $descriptionFactory)
+    private Description_Factory $description_factory;
+    private Type_Resolver $type_resolver;
+    public function __construct(Type_Resolver $type_resolver, Description_Factory $description_factory)
     {
-        $this->descriptionFactory = $descriptionFactory;
-        $this->typeResolver = $typeResolver;
+        $this->description_factory = $description_factory;
+        $this->type_resolver = $type_resolver;
     }
-
-    public function create(PhpDocTagNode $node, Context $context): Tag
+    public function create(Php_Doc_Tag_Node $node, Context $context): Tag
     {
-        $tagValue = $node->value;
-
-        if ($tagValue instanceof InvalidTagValueNode) {
-            return InvalidTag::create($tagValue->value, 'param')->withError(
-                ParserException::from($tagValue->exception)
-            );
+        $tag_value = $node->value;
+        if ($tag_value instanceof Invalid_Tag_Value_Node) {
+            return Invalid_Tag::create($tag_value->value, 'param')->with_error(Parser_Exception::from($tag_value->exception));
         }
-
-        Assert::isInstanceOfAny(
-            $tagValue,
-            [
-                ParamTagValueNode::class,
-                TypelessParamTagValueNode::class,
-            ]
-        );
-
-        if (($tagValue->type ?? null) instanceof OffsetAccessTypeNode) {
-            return InvalidTag::create(
-                (string) $tagValue,
-                'param'
-            );
+        Assert::is_instance_of_any($tag_value, [Param_Tag_Value_Node::class, Typeless_Param_Tag_Value_Node::class]);
+        if (($tag_value->type ?? null) instanceof Offset_Access_Type_Node) {
+            return Invalid_Tag::create((string) $tag_value, 'param');
         }
-
-        $description = $tagValue->getAttribute('description');
+        $description = $tag_value->get_attribute('description');
         if (is_string($description) === false) {
-            $description = $tagValue->description;
+            $description = $tag_value->description;
         }
-
-        return new Param(
-            trim($tagValue->parameterName, '$'),
-            $this->typeResolver->createType($tagValue->type ?? new IdentifierTypeNode('mixed'), $context),
-            $tagValue->isVariadic,
-            $this->descriptionFactory->create($description, $context),
-            $tagValue->isReference
-        );
+        return new Param(trim($tag_value->parameter_name, '$'), $this->type_resolver->create_type($tag_value->type ?? new Identifier_Type_Node('mixed'), $context), $tag_value->is_variadic, $this->description_factory->create($description, $context), $tag_value->is_reference);
     }
-
-    public function supports(PhpDocTagNode $node, Context $context): bool
+    public function supports(Php_Doc_Tag_Node $node, Context $context): bool
     {
-        return $node->value instanceof ParamTagValueNode
-            || $node->value instanceof TypelessParamTagValueNode
-            || $node->name === '@param';
+        return $node->value instanceof Param_Tag_Value_Node || $node->value instanceof Typeless_Param_Tag_Value_Node || $node->name === '@param';
     }
 }

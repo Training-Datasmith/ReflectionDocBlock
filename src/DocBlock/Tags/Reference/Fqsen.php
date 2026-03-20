@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
@@ -10,23 +9,19 @@ declare(strict_types=1);
  *
  * @link http://phpdoc.org
  */
+namespace Php_Documentor\Reflection\Doc_Block\Tags\Reference;
 
-namespace phpDocumentor\Reflection\DocBlock\Tags\Reference;
-
-use phpDocumentor\Reflection\Fqsen as RealFqsen;
-
+use Php_Documentor\Reflection\Fqsen as RealFqsen;
 /**
  * Fqsen reference used by {@see \phpDocumentor\Reflection\DocBlock\Tags\See}
  */
 final class Fqsen implements Reference
 {
-    private RealFqsen $fqsen;
-
-    public function __construct(RealFqsen $fqsen)
+    private Real_Fqsen $fqsen;
+    public function __construct(Real_Fqsen $fqsen)
     {
         $this->fqsen = $fqsen;
     }
-
     /**
      * @return string string representation of the referenced fqsen
      */

@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
@@ -10,24 +9,20 @@ declare(strict_types=1);
  *
  * @link http://phpdoc.org
  */
-
-namespace phpDocumentor\Reflection\DocBlock\Tags\Reference;
+namespace Php_Documentor\Reflection\Doc_Block\Tags\Reference;
 
 use Webmozart\Assert\Assert;
-
 /**
  * Url reference used by {@see \phpDocumentor\Reflection\DocBlock\Tags\See}
  */
 final class Url implements Reference
 {
     private string $uri;
-
     public function __construct(string $uri)
     {
-        Assert::stringNotEmpty($uri);
+        Assert::string_not_empty($uri);
         $this->uri = $uri;
     }
-
     public function __toString(): string
     {
         return $this->uri;

@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
@@ -10,64 +9,50 @@ declare(strict_types=1);
  *
  * @link      http://phpdoc.org
  */
+namespace Php_Documentor\Reflection\Doc_Block\Tags;
 
-namespace phpDocumentor\Reflection\DocBlock\Tags;
-
-use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\Type;
-
+use Php_Documentor\Reflection\Doc_Block\Description;
+use Php_Documentor\Reflection\Type;
 /**
  * Reflection class for the {@}param tag in a Docblock.
  */
-final class Param extends TagWithType
+final class Param extends Tag_With_Type
 {
-    private ?string $variableName = null;
-
+    private ?string $variable_name = null;
     /** @var bool determines whether this is a variadic argument */
-    private bool $isVariadic;
-
+    private bool $is_variadic;
     /** @var bool determines whether this is passed by reference */
-    private bool $isReference;
-
-    public function __construct(
-        ?string $variableName,
-        ?Type $type = null,
-        bool $isVariadic = false,
-        ?Description $description = null,
-        bool $isReference = false
-    ) {
-        $this->name         = 'param';
-        $this->variableName = $variableName;
-        $this->type         = $type;
-        $this->isVariadic   = $isVariadic;
-        $this->description  = $description;
-        $this->isReference  = $isReference;
+    private bool $is_reference;
+    public function __construct(?string $variable_name, ?Type $type = null, bool $is_variadic = false, ?Description $description = null, bool $is_reference = false)
+    {
+        $this->name = 'param';
+        $this->variable_name = $variable_name;
+        $this->type = $type;
+        $this->is_variadic = $is_variadic;
+        $this->description = $description;
+        $this->is_reference = $is_reference;
     }
-
     /**
      * Returns the variable's name.
      */
-    public function getVariableName(): ?string
+    public function get_variable_name(): ?string
     {
-        return $this->variableName;
+        return $this->variable_name;
     }
-
     /**
      * Returns whether this tag is variadic.
      */
-    public function isVariadic(): bool
+    public function is_variadic(): bool
     {
-        return $this->isVariadic;
+        return $this->is_variadic;
     }
-
     /**
      * Returns whether this tag is passed by reference.
      */
-    public function isReference(): bool
+    public function is_reference(): bool
     {
-        return $this->isReference;
+        return $this->is_reference;
     }
-
     /**
      * Returns a string representation for this tag.
      */
@@ -78,17 +63,12 @@ final class Param extends TagWithType
         } else {
             $description = '';
         }
-
-        $variableName = '';
-        if ($this->variableName !== null && $this->variableName !== '') {
-            $variableName .= ($this->isReference ? '&' : '') . ($this->isVariadic ? '...' : '');
-            $variableName .= '$' . $this->variableName;
+        $variable_name = '';
+        if ($this->variable_name !== null && $this->variable_name !== '') {
+            $variable_name .= ($this->is_reference ? '&' : '') . ($this->is_variadic ? '...' : '');
+            $variable_name .= '$' . $this->variable_name;
         }
-
         $type = (string) $this->type;
-
-        return $type
-            . ($variableName !== '' ? ($type !== '' ? ' ' : '') . $variableName : '')
-            . ($description !== '' ? ($type !== '' || $variableName !== '' ? ' ' : '') . $description : '');
+        return $type . ($variable_name !== '' ? ($type !== '' ? ' ' : '') . $variable_name : '') . ($description !== '' ? ($type !== '' || $variable_name !== '' ? ' ' : '') . $description : '');
     }
 }

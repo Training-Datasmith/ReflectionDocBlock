@@ -1,7 +1,6 @@
 <?php
 
-declare(strict_types=1);
-
+declare (strict_types=1);
 /**
  * This file is part of phpDocumentor.
  *
@@ -10,23 +9,19 @@ declare(strict_types=1);
  *
  * @link      http://phpdoc.org
  */
-
-namespace phpDocumentor\Reflection\DocBlock\Tags;
+namespace Php_Documentor\Reflection\Doc_Block\Tags;
 
 use InvalidArgumentException;
-use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
-use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
-use phpDocumentor\Reflection\Types\Context as TypeContext;
-
+use Php_Documentor\Reflection\Doc_Block\Description;
+use Php_Documentor\Reflection\Doc_Block\Description_Factory;
+use Php_Documentor\Reflection\Doc_Block\Standard_Tag_Factory;
+use Php_Documentor\Reflection\Types\Context as TypeContext;
 use function preg_match;
-
 use Webmozart\Assert\Assert;
-
 /**
  * Parses a tag definition for a DocBlock.
  */
-final class Generic extends BaseTag
+final class Generic extends Base_Tag
 {
     /**
      * Parses a tag and populates the member variables.
@@ -36,29 +31,20 @@ final class Generic extends BaseTag
      */
     public function __construct(string $name, ?Description $description = null)
     {
-        $this->validateTagName($name);
-
-        $this->name        = $name;
+        $this->validate_tag_name($name);
+        $this->name = $name;
         $this->description = $description;
     }
-
     /**
      * Creates a new tag that represents any unknown tag type.
      */
-    public static function create(
-        string $body,
-        string $name = '',
-        ?DescriptionFactory $descriptionFactory = null,
-        ?TypeContext $context = null
-    ): self {
-        Assert::stringNotEmpty($name);
-        Assert::notNull($descriptionFactory);
-
-        $description = $body !== '' ? $descriptionFactory->create($body, $context) : null;
-
+    public static function create(string $body, string $name = '', ?Description_Factory $description_factory = null, ?Type_Context $context = null): self
+    {
+        Assert::string_not_empty($name);
+        Assert::not_null($description_factory);
+        $description = $body !== '' ? $description_factory->create($body, $context) : null;
         return new static($name, $description);
     }
-
     /**
      * Returns the tag as a serialized string
      */
@@ -67,20 +53,15 @@ final class Generic extends BaseTag
         if ($this->description) {
             return $this->description->render();
         }
-
         return '';
     }
-
     /**
      * Validates if the tag name matches the expected format, otherwise throws an exception.
      */
-    private function validateTagName(string $name): void
+    private function validate_tag_name(string $name): void
     {
-        if (!preg_match('/^' . StandardTagFactory::REGEX_TAGNAME . '$/u', $name)) {
-            throw new InvalidArgumentException(
-                'The tag name "' . $name . '" is not wellformed. Tags may only consist of letters, underscores, '
-                . 'hyphens and backslashes.'
-            );
+        if (!preg_match('/^' . Standard_Tag_Factory::REGEX_TAGNAME . '$/u', $name)) {
+            throw new InvalidArgumentException('The tag name "' . $name . '" is not wellformed. Tags may only consist of letters, underscores, ' . 'hyphens and backslashes.');
         }
     }
 }
