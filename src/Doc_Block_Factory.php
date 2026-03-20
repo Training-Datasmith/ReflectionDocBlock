@@ -30,22 +30,45 @@ use function strpos;
 use function substr;
 use function trim;
 use Webmozart\Assert\Assert;
+/**
+ * Parses raw DocBlock comment strings into structured Doc_Block value objects.
+ *
+ * Create a single instance per application via create_instance() and reuse it.
+ * Custom tag handlers can be added before or after construction with
+ * register_tag_handler().
+ *
+ * @see Doc_Block         The value object produced by create()
+ * @see Standard_Tag_Factory For the default tag-handler registry
+ */
 final class Doc_Block_Factory implements Doc_Block_Factory_Interface
 {
     private Doc_Block\Description_Factory $description_factory;
     private Tag_Factory $tag_factory;
+
     /**
-     * Initializes this factory with the required subcontractors.
+     * Initializes this factory with the required sub-factories.
+     *
+     * Prefer create_instance() for typical usage; inject directly only when
+     * providing custom Description_Factory or Tag_Factory implementations.
+     *
+     * @param Description_Factory $description_factory Parses description bodies and inline tags
+     * @param Tag_Factory         $tag_factory         Creates typed Tag objects from raw tag strings
      */
     public function __construct(Description_Factory $description_factory, Tag_Factory $tag_factory)
     {
         $this->description_factory = $description_factory;
         $this->tag_factory = $tag_factory;
     }
+
     /**
-     * Factory method for easy instantiation.
+     * Creates a ready-to-use Doc_Block_Factory with the standard tag set.
      *
-     * @param array<string, class-string<Tag>|Factory> $additionalTags
+     * Registers the full set of built-in phpDocumentor tags (param, return,
+     * throws, var, see, etc.) and optionally merges in additional custom handlers.
+     *
+     * @param array<string, class-string<Tag>|Factory> $additional_tags Extra tag-name => handler mappings
+     *
+     * @return Doc_Block_Factory_Interface Fully configured factory instance
      */
     public static function create_instance(array $additional_tags = []): Doc_Block_Factory_Interface
     {
@@ -59,8 +82,22 @@ final class Doc_Block_Factory implements Doc_Block_Factory_Interface
         return $doc_block_factory;
     }
     /**
-     * @param object|string $docblock A string containing the DocBlock to parse or an object supporting the
-     *                                getDocComment method (such as a ReflectionClass object).
+     * Parses a raw DocBlock comment into a structured Doc_Block value object.
+     *
+     * Accepts either a raw comment string (including the leading `/**` delimiters)
+     * or any object that exposes a `getDocComment(): string` method (e.g. any
+     * PHP Reflection* object).
+     *
+     * @param object|string     $docblock A comment string or a Reflection* object with getDocComment()
+     * @param Types\Context|null $context  Namespace and import context used to resolve class names in types
+     * @param Location|null     $location  File and line metadata to attach to the parsed block
+     *
+     * @return Doc_Block Immutable parsed DocBlock value object
+     *
+     * @throws \InvalidArgumentException If $docblock is an object without a getDocComment() method
+     * @throws \InvalidArgumentException If the resulting docblock string is empty
+     *
+     * @complexity O(n) where n is the number of characters in the DocBlock comment
      */
     public function create($docblock, ?Types\Context $context = null, ?Location $location = null): Doc_Block
     {
@@ -81,7 +118,15 @@ final class Doc_Block_Factory implements Doc_Block_Factory_Interface
         return new Doc_Block($summary, $description ? $this->description_factory->create($description, $context) : null, $this->parse_tag_block($tags, $context), $context, $location, $template_marker === '#@+', $template_marker === '#@-');
     }
     /**
-     * @param class-string<Tag>|Factory $handler
+     * Registers a custom tag handler to be used when a tag with the given name is encountered.
+     *
+     * The handler may be a class-string implementing Tag (instantiated on demand) or an
+     * instance of the Factory contract for more complex construction logic.
+     *
+     * @param string                    $tag_name Tag name without the leading '@' (e.g. 'myTag')
+     * @param class-string<Tag>|Factory $handler  A Tag class name or a Factory instance
+     *
+     * @return void
      */
     public function register_tag_handler(string $tag_name, $handler): void
     {
